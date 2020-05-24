@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="/template/layout.xhtml">
+
+		<ui:define name="content">
+			<p:growl id="msgGlobal" />
+			<h:form id="frmVenda">
+
+				<p:toolbar style="background-color: #87CEFA;">
+					<p:toolbarGroup style="height:30px" align="center">
+						<h4 align="center">Vendas</h4>
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:dataTable value="#{vendaBean.produtos}" var="produto"
+					paginator="true" paginatorPosition="bottom" rows="4" id="venda"
+					filteredValue="#{vendaBean.listaProdutos}"
+					emptyMessage="Nenhum registro encontrado">
+
+					<p:column headerText="Produto"
+						style="width:15%; text-align:center;" filterBy="#{produto.nome}">
+						<h:outputText value="#{produto.nome}" />
+					</p:column>
+
+					<p:column headerText="Preço" style="text-align:center;"
+						width="80px;" sortBy="#{produto.preco}">
+						<h:outputText value="#{produto.preco}">
+							<f:convertNumber type="currency" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Qtd" style="text-align:center;" width="80px;"
+						sortBy="#{produto.quantidade}">
+						<h:outputText value="#{produto.quantidade}" />
+					</p:column>
+
+					<p:column headerText="Adicionar" style="text-align:center;"
+						width="70px;">
+						<p:commandButton icon="ui-icon-cart"
+							update=":frmVenda:carrinho :frmVenda:total "
+							actionListener="#{vendaBean.adicionar(produto)}" />
+					</p:column>
+				</p:dataTable>
+
+				<p:separator />
+
+				<p:dataTable paginator="true" paginatorPosition="bottom" rows="4"
+					id="carrinho" var="item" value="#{vendaBean.listaItens}"
+					emptyMessage="Nenhum registro encontrado">
+
+					<p:column headerText="Produto" style="text-align:center;"
+						width="150px;">
+						<h:outputText value="#{item.produto.nome}" />
+					</p:column>
+
+					<p:column headerText="Qtd" style="text-align:center;" width="80px;">
+						<h:outputText value="#{item.quantidade}" />
+					</p:column>
+
+					<p:column headerText="Valor" style="text-align:center;"
+						width="80px;">
+						<h:outputText value="#{item.valor}">
+							<f:convertNumber type="currency" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Opções" style="text-align:center;"
+						width="70px;">
+						<p:commandButton value="x"
+							actionListener="#{vendaBean.remover(item)}"
+							update=":frmVenda:carrinho :frmVenda:total" />
+					</p:column>
+
+				</p:dataTable>
+				<p:separator />
+
+				<div align="center">
+
+					<p:panelGrid columns="4">
+						<p:outputLabel value="Serviço R$ " />
+						<p:inputText value="#{vendaBean.venda.servico}" size="5" />
+						<p:commandButton value="+" action="#{vendaBean.adicionaServico}"
+							update=":frmVenda:totalNota :frmVenda:total" />
+						<p:commandButton value="-" action="#{vendaBean.removeServico}"
+							update=":frmVenda:totalNota :frmVenda:total" />
+
+					</p:panelGrid>
+					<h:outputText id="total"
+						value="Valor Parcial: #{vendaBean.vendaCadastro.valor}" />
+				</div>
+				<div align="center">
+					<p:commandButton update=":frmVenda:totalNota :frmVenda:horario "
+						actionListener="#{vendaBean.horario}" value="Finalizar Compra"
+						oncomplete="PF('dialog').show();" icon="ui-icon-cart" />
+
+				</div>
+
+				<div align="center">
+					<p:dialog header="Realizar Venda" widgetVar="dialog"
+						showEffect="explode" height="350" resizable="false"
+						closable="true" modal="true" appendTo="@(body)" responsive="true">
+
+						<p:panelGrid columns="2" border="1">
+							<h:outputText value="Funcionario " />
+							<p:selectOneMenu filter="true" value="#{vendaBean.entidades}"
+								converter="funcionarioConverter">
+								<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+								<f:selectItems value="#{vendaBean.funcionarios}"
+									var="funcionario" itemValue="#{funcionario}"
+									itemLabel="#{funcionario.nome} - #{funcionario.funcao}"  />
+							</p:selectOneMenu>
+
+							<h:outputText value="Cliente " />
+							<p:selectOneMenu filter="true" value="#{vendaBean.entidades}">
+								<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+								<f:selectItems value="#{vendaBean.clientes}" var="cliente"
+									itemValue="#{cliente}"
+									itemLabel="#{cliente.nome} - #{cliente.cpf}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Horário:" />
+							<h:outputText id="horario"
+								value="#{vendaBean.vendaCadastro.horario}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+									timeZone="America/Sao_Paulo" />
+							</h:outputText>
+
+							<h:outputText value="Valor R$ " />
+							<h:outputText id="totalNota"
+								value="#{vendaBean.vendaCadastro.valor}" />
+
+						</p:panelGrid>
+
+						<br />
+						<div align="center">
+							<p:commandButton value="Finalizar"
+								actionListener="#{vendaBean.finalizarVenda}"
+								update=":frmVenda :msgGlobal" oncomplete="PF('dialog').hide();" />
+							<br /> <br />
+							<p:commandButton value="Voltar" onclick="PF('dialog').hide();" />
+						</div>
+					</p:dialog>
+				</div>
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

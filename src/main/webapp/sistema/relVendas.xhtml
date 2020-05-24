@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+
+
+		<ui:define name="content">
+			<p:toolbar style="background-color: #87CEFA;">
+				<p:toolbarGroup align="center">
+					<h3 align="center">Gerar Relatório de Vendas</h3>
+				</p:toolbarGroup>
+			</p:toolbar>
+			<h:form>
+			<br/>
+				<div align="center">
+					<p:panelGrid columns="2" border="2">
+						<p:outputLabel value="Período" />
+						<p:inputText />
+						<p:outputLabel value="Cliente" />
+						<p:inputText />
+						<p:outputLabel value="Funcionario"/>
+						<p:inputText/>
+					</p:panelGrid>
+				</div>
+				<br/>
+				<div align="center">
+					<p:commandButton value="Gerar Relatório" icon="ui-icon-script" />
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

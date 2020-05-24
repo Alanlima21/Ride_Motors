@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Página Principal</title>
+
+</h:head>
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+
+
+		<ui:define name="content">
+			<!-- <h1 align="center" style="bottom:450px"><i>RIDE MOTORS</i> </h1>
+			<p:graphicImage url="/resources/imagens/oie_transparent.png.png"
+			width=""/>
+			<p:carousel headerText="Bem-Vindo"
+				itemStyle="height:200px;text-align:center" effect="slide"
+				autoPlayInterval="4000" numVisible="1" easing="easeOutBounce"
+				style="width:86%; height:100%" circular="true">
+
+					<p:graphicImage url="/resources/imagens/bemvindo.jpg" style="width:50%; height:100%"/>
+					<p:graphicImage url="/resources/imagens/logomoto.png" style="width:30%; height:100%"/>
+				
+			</p:carousel>- -->
+				<p:toolbar style="background-color: #87CEFA;">
+					<p:toolbarGroup style="height:30px" align="center">
+						<h2 align="center"> <i>Ride Motors</i></h2>					
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:graphicImage url="/resources/imagens/oie_transparent.png"
+			style="width:100%; height:90%;"/>
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+</html>

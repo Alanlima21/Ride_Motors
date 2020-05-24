@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Index</title>
+</h:head>
+
+<h:body style="background: #778899">
+	<h:form>
+			<p:growl id="msgGlobal" />
+		<h:panelGrid style="margin-left: 550px;  padding-top: 130px;"
+			columns="2">
+
+			<p:graphicImage library="imagens" name="logomoto.png" width="103px"
+				height="80px" />
+			<h2 style="color: black">
+				<i>RIDE MOTORS</i>
+			</h2>
+		</h:panelGrid>
+
+		<h:panelGrid style="margin-left: 550px;" columns="1" >
+
+			<p:outputLabel  value="Login" style="color:black" />
+			<p:inputMask id="login" value="#{loginBean.login.login}"
+				mask="999.999.999-99" maxlength="50" size="26" placeholder="CPF"
+				  />
+
+			<p:outputLabel  value="Senha" style="color:black" />
+			<p:password id="senha" value="#{loginBean.login.senha}" size="26"
+				/>
+		</h:panelGrid>
+		<br />
+		<p:commandButton id="botao" style="margin-left: 650px;" value="Entrar"
+			action="#{loginBean.logar}" update="msgGlobal"/>
+		<br />
+		<p:commandLink value="Cadastre-se" style="margin-left: 650px;"
+			action="cadastro.xhtml" />
+	</h:form>
+
+</h:body>
+</html>

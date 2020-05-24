@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Produtos</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/layout.xhtml">
+
+
+		<ui:define name="content">
+
+			<h3 align="center">Gerenciamento de Produtos</h3>
+			<p:growl id="msgGlobal" />
+			<h:form id="form">
+
+				<p:fieldset legend="Menu">
+					<p:toolbar style="background-color: #87CEFA;">
+						<p:toolbarGroup>
+
+							<p:commandButton value="Novo" icon="ui-icon-document"
+								action="#{produtoBean.novo()}" update=":form :msgGlobal" />
+
+							<span class="ui-separator"> <span
+								class="ui-icon pi pi-ellipsis-v" />
+							</span>
+
+							<p:commandButton value="Salvar" icon="ui-icon-disk"
+								action="#{produtoBean.salvar()}"
+								disabled="#{produtoBean.busca == true}"
+								update=":form :msgGlobal" />
+
+							<span class="ui-separator"> <span
+								class="ui-icon pi pi-ellipsis-v" />
+							</span>
+
+							<p:commandButton value="Buscar" icon="ui-icon-search"
+								action="#{produtoBean.buscar()}" update=":form :msgGlobal" />
+						</p:toolbarGroup>
+
+					</p:toolbar>
+				</p:fieldset>
+
+				<br />
+				<div align="center">
+					<p:panelGrid columns="2" border="3"
+						rendered="#{produtoBean.busca == false}">
+						<p:outputLabel value="Nome" />
+						<p:inputText value="#{produtoBean.entidade.nome}" />
+						<p:outputLabel value="Fornecedor" />
+						<p:inputText value="#{produtoBean.entidade.fornecedor}" />
+						<p:outputLabel value="Telefone" />
+						<p:inputMask mask="(99)99999-9999"
+							value="#{produtoBean.entidade.telefone}" />
+						<p:outputLabel value="Preço" />
+						<p:inputText value="#{produtoBean.entidade.preco}">
+							<f:convertNumber currencySymbol="R$" type="currency" />
+						</p:inputText>
+						<p:outputLabel value="Quantidade" />
+						<p:inputText value="#{produtoBean.entidade.quantidade}" />
+					</p:panelGrid>
+				</div>
+
+				<p:dataTable value="#{produtoBean.entidades}" var="produto"
+					rendered="#{produtoBean.busca == true}" paginator="true"
+					paginatorPosition="bottom" rows="5"
+					emptyMessage="Nenhum registro encontrado"
+					filteredValue="#{produtoBean.listaProdutos}">
+
+					<p:column headerText="Código" width="50px;"
+						style="text-align:center">
+						<h:outputText value="#{produto.id}" />
+					</p:column>
+
+					<p:column headerText="Produto"
+						style="width:20%; text-align:center;" filterBy="#{produto.nome}">
+						<h:outputText value="#{produto.nome}" />
+					</p:column>
+
+					<p:column headerText="Fornecedor" style="text-align:center;"
+						width="180px;" sortBy="#{produto.fornecedor}">
+						<h:outputText value="#{produto.fornecedor}" />
+					</p:column>
+
+					<p:column headerText="Contato_Forn" style="text-align:center;"
+						width="150px;">
+						<h:outputText value="#{produto.telefone}" />
+					</p:column>
+
+					<p:column headerText="Preço" style="text-align:center;"
+						width="80px;" sortBy="#{produto.preco}">
+						<h:outputText value="#{produto.preco}">
+							<f:convertNumber type="currency" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Qtd" style="text-align:center;" width="80px;"
+						sortBy="#{produto.quantidade}">
+						<h:outputText value="#{produto.quantidade}" />
+					</p:column>
+
+
+					<p:column headerText="Alterar" width="80px;">
+
+						<p:commandButton action="#{produtoBean.editar(produto)}"
+							update="@form" icon="ui-icon-pencil" />
+
+						<p:commandButton action="#{produtoBean.deletar(produto)}"
+							update="@form" icon="ui-icon-trash">
+							<p:confirm header="Confirmação"
+								message="Deseja apagar o produto?" icon="ui-icon-alert" />
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+									outcome="produto.xhtml" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+
+
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

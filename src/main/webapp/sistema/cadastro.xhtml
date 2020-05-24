@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Cadastro</title>
+</h:head>
+<h:body style="background: #778899">
+	<h:form style=" padding-top: 130px;">
+		<p:growl id="msgGlobal" />
+		<p:panelGrid style="margin-left: 450px; padding-top: 130px;"
+			columns="2">
+
+			<p:graphicImage library="imagens" name="logomoto.png" width="103px"
+				height="80px" />
+			<h1 style="color: black; margin-left: 30px;">
+				<i>Cadastre-se</i>
+			</h1>
+
+			<p:outputLabel value="Nome" for="nome" />
+			<p:inputText value="#{cadUsuarioBean.cadUsuario.nome}" id="nome"
+				required="true" requiredMessage="Campo nome é obrigatório" />
+			<p:outputLabel value="Sobrenome" for="sobrenome" />
+			<p:inputText value="#{cadUsuarioBean.cadUsuario.sobrenome}"
+				id="sobrenome" required="true"
+				requiredMessage="Campo sobrenome é obrigatório" />
+			<p:outputLabel value="CPF" for="cpf" />
+			<p:inputMask mask="999.999.999-99"
+				value="#{cadUsuarioBean.cadUsuario.cpf}" id="cpf" required="true"
+				requiredMessage="O campo cpf é obrigatório" />
+			<p:outputLabel value="Senha" for="senha" />
+			<p:password value="#{cadUsuarioBean.cadUsuario.senha}" id="senha"
+				required="true" requiredMessage="O campo senha é obrigatório" />
+			<p:outputLabel value="Confirmar Senha" for="conf" />
+			<p:password value="#{cadUsuarioBean.cadUsuario.confSenha}" id="conf"
+				required="true"
+				requiredMessage="O campo confirmar senha é obrigatório" />
+		</p:panelGrid>
+		<br />
+
+		<p:commandButton style="margin-left: 630px;" value="Cadastrar"
+			action="#{cadUsuarioBean.salvar}" update="msgGlobal" />
+
+
+	</h:form>
+</h:body>
+</html>

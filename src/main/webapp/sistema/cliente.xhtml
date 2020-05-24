@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="/template/layout.xhtml">
+
+
+		<ui:define name="content">
+			<h3 align="center">Cadastro de Clientes</h3>
+			<p:growl id="msgGlobal" />
+			<h:form id="form">
+				<p:fieldset legend="Menu">
+					<p:toolbar style="background-color: #87CEFA;">
+						<p:toolbarGroup>
+
+							<p:commandButton value="Novo" icon="ui-icon-document"
+								action="#{clienteBean.novo()}" update=":form :msgGlobal" />
+
+							<span class="ui-separator"> <span
+								class="ui-icon pi pi-ellipsis-v" />
+							</span>
+
+							<p:commandButton value="Salvar" icon="ui-icon-disk"
+								action="#{clienteBean.salvar()}"
+								disabled="#{clienteBean.busca == true}"
+								update=":form :msgGlobal" />
+
+							<span class="ui-separator"> <span
+								class="ui-icon pi pi-ellipsis-v" />
+							</span>
+
+							<p:commandButton value="Buscar" icon="ui-icon-search"
+								action="#{clienteBean.buscar()}" update=":form :msgGlobal" />
+						</p:toolbarGroup>
+
+					</p:toolbar>
+				</p:fieldset>
+
+
+				<div align="center">
+					<p:panelGrid columns="2" border="2"
+						rendered="#{clienteBean.busca == false}">
+						<p:outputLabel value="Nome" />
+						<p:inputText value="#{clienteBean.entidade.nome}" />
+						<p:outputLabel value="Cpf" />
+						<p:inputMask mask="999.999.999-99"
+							value="#{clienteBean.entidade.cpf}" />
+						<p:outputLabel value="Email" />
+						<p:inputText value="#{clienteBean.entidade.email}" />
+						<p:outputLabel value="Data" />
+						<p:inputMask mask="99/99/9999"
+							value="#{clienteBean.entidade.data}" />
+					</p:panelGrid>
+				</div>
+
+				<p:dataTable value="#{clienteBean.entidades}" var="cliente"
+					rendered="#{clienteBean.busca == true}" paginator="true"
+					paginatorPosition="bottom" rows="5"
+					emptyMessage="Nenhum registro encontrado"
+					filteredValue="#{clienteBean.listaClientes}">
+
+					<p:column headerText="Código" width="50px;"
+						style="text-align:center">
+						<h:outputText value="#{cliente.id}" />
+					</p:column>
+
+					<p:column headerText="Nome" style=" width:15%; text-align:center;"
+						filterBy="#{cliente.nome}">
+						<h:outputText value="#{cliente.nome}" />
+					</p:column>
+
+					<p:column headerText="Cpf" style="text-align:center;"
+						width="130px;">
+						<h:outputText value="#{cliente.cpf}" />
+					</p:column>
+
+					<p:column headerText="Email" style="text-align:center;"
+						width="250px;">
+						<h:outputText value="#{cliente.email}" />
+					</p:column>
+
+					<p:column headerText="Data Cadastro" style="text-align:center;"
+						width="150px;">
+						<h:outputText value="#{cliente.data}" />
+					</p:column>
+
+
+					<p:column headerText="Alterar" width="80px;">
+
+						<p:commandButton action="#{clienteBean.editar(cliente)}"
+							update="@form" icon="ui-icon-pencil" />
+
+						<p:commandButton action="#{clienteBean.deletar(cliente)}"
+							update="@form" icon="ui-icon-trash">
+							<p:confirm header="Confirmação"
+								message="Deseja apagar o cliente?" icon="ui-icon-alert" />
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+									outcome="cliente.xhtml" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+
+
+						</p:commandButton>
+
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
