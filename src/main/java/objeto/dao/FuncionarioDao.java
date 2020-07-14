@@ -86,17 +86,19 @@ public class FuncionarioDao implements CrudDao<Funcionario> {
 			ps = conexao.prepareStatement("SELECT nome_func FROM funcionario where id_func = ? ");
 			ps.setInt(1, codigo);
 			ResultSet rs =  ps.executeQuery();
-			Funcionario funcionario = new Funcionario();
+			
 			if(rs.next()) {
-			
+			Funcionario funcionario = new Funcionario();
 			funcionario.setNome(rs.getString("nome_func"));
+		
 			System.out.println(funcionario.getNome());
-			
-			}
 			return funcionario;
+			}
+			
 	}catch (Exception ex) {
 		throw new ErroSistema("Erro ao buscar funcionario!", ex);
 	}
+		return null;
 		
 }
 }

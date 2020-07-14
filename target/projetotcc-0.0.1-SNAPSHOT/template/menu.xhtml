@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<body>
+	<ui:composition>
+		<h:form>
+				
+				<p:panelMenu>
+					<p:submenu label="Arquivo" expanded="true">
+						<p:menuitem value="Principal" outcome="home.xhtml" />
+						<p:menuitem value="Sair" outcome="index.xhtml"/>
+					</p:submenu>
+				</p:panelMenu>
+				<br />
+				<p:panelMenu>
+					<p:submenu label="Cadastro" expanded="true">
+						<p:menuitem value="Produtos"  outcome="produto.xhtml"/>
+						<p:menuitem value="Clientes" outcome="cliente.xhtml"/>
+						<p:menuitem value="Funcionarios" outcome="funcionario.xhtml" />
+					</p:submenu>
+				</p:panelMenu>
+				<br />
+				<p:panelMenu>
+					<p:submenu label="Vendas" style="background-color: #CEF6F5;" expanded="true">
+						<p:menuitem value="Nova Venda" outcome="venda.xhtml" update="@form" />
+						
+					</p:submenu>
+				</p:panelMenu>
+				<br />
+				<p:panelMenu>
+					<p:submenu label="Relatório" expanded="true">
+						<p:menuitem value="Produtos" outcome="relProd.xhtml" />
+						<p:menuitem value="Vendas" outcome="relVendas.xhtml" />
+					</p:submenu>
+				</p:panelMenu>
+
+			</h:form>
+	</ui:composition>
+</body>
+</html>

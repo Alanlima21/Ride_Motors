@@ -8,7 +8,6 @@ import javax.faces.context.FacesContext;
 
 import objeto.dao.CadUsuarioDao;
 import objeto.entidade.CadUsuario;
-import objeto.entidade.Login;
 import objeto.tratamentoErro.ErroSistema;
 
 

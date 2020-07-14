@@ -25,6 +25,7 @@ public class FuncionarioConverter implements Converter {
 		} catch (RuntimeException | ErroSistema ex) {
 			return null;
 		}
+		
 	}
 
 	@Override
@@ -36,6 +37,6 @@ public class FuncionarioConverter implements Converter {
 		} catch (RuntimeException ex) {
 			return null;
 		}
-
+		
 	}
 }

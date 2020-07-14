@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="/template/layout.xhtml">
+
+
+		<ui:define name="content">
+			<h3 align="center">Gerenciamento de Funcionário</h3>
+			<p:growl id="msgGlobal" />
+			<h:form id="form">
+
+				<p:fieldset legend="Menu">
+					<p:toolbar style="background-color: #87CEFA;">
+						<p:toolbarGroup>
+
+							<p:commandButton value="Novo" icon="ui-icon-document"
+								action="#{funcionarioBean.novo()}" update=":form :msgGlobal" />
+
+							<span class="ui-separator"> <span
+								class="ui-icon pi pi-ellipsis-v" />
+							</span>
+
+							<p:commandButton value="Salvar" icon="ui-icon-disk"
+								action="#{funcionarioBean.salvar()}"
+								disabled="#{funcionarioBean.busca == true}"
+								update=":form :msgGlobal" />
+
+							<span class="ui-separator"> <span
+								class="ui-icon pi pi-ellipsis-v" />
+							</span>
+
+							<p:commandButton value="Buscar" icon="ui-icon-search"
+								action="#{funcionarioBean.buscar()}" update=":form :msgGlobal" />
+
+						</p:toolbarGroup>
+					</p:toolbar>
+				</p:fieldset>
+
+				<div align="center">
+					<p:panelGrid columns="2" border="2"
+						rendered="#{funcionarioBean.busca == false}">
+						<h:outputLabel value="Nome" />
+						<p:inputText value="#{funcionarioBean.entidade.nome}" />
+						<h:outputLabel value="Cpf" />
+						<p:inputMask mask="999.999.999-99"
+							value="#{funcionarioBean.entidade.cpf}" />
+						<h:outputLabel value="Telefone" />
+						<p:inputMask mask="(99) 99999-9999"
+							value="#{funcionarioBean.entidade.telefone}" />
+						<h:outputLabel value="Salário" />
+						<p:inputText value="#{funcionarioBean.entidade.salario}">
+							<f:convertNumber currencySymbol="R$" type="currency" />
+						</p:inputText>
+						<h:outputLabel value="Funcão" />
+						<p:inputText value="#{funcionarioBean.entidade.funcao}" />
+
+					</p:panelGrid>
+				</div>
+
+				<p:dataTable value="#{funcionarioBean.entidades}" var="funcionario"
+					rendered="#{funcionarioBean.busca == true}" paginator="true"
+					paginatorPosition="bottom" rows="5"
+					emptyMessage="Nenhum registro encontrado"
+					filteredValue="#{funcionarioBean.listaFuncionario}">
+
+					<p:column headerText="Código" width="50px;"
+						style="text-align:center" sortBy="#{funcionario.id}">
+						<h:outputText value="#{funcionario.id}" />
+					</p:column>
+
+					<p:column headerText="Nome" filterBy="#{funcionario.nome}"
+						style="width:15%; text-align:center">
+						<h:outputText value="#{funcionario.nome}" />
+					</p:column>
+
+					<p:column headerText="Cpf" width="130px;" style="text-align:center">
+						<h:outputText value="#{funcionario.cpf}" />
+					</p:column>
+
+					<p:column headerText="Telefone" width="130px;"
+						style="text-align:center">
+						<h:outputText value="#{funcionario.telefone}" />
+					</p:column>
+
+					<p:column headerText="Salário" width="100px;"
+						style="text-align:center">
+						<h:outputText value="#{funcionario.salario}">
+							<f:convertNumber type="currency" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Função" width="80px;"
+						style="text-align:center">
+						<h:outputText value="#{funcionario.funcao}" />
+					</p:column>
+
+					<p:column headerText="Alterar" width="80px;">
+
+						<p:commandButton action="#{funcionarioBean.editar(funcionario)}"
+							update="@form" icon="ui-icon-pencil" />
+
+						<p:commandButton action="#{funcionarioBean.deletar(funcionario)}"
+							update="@form" icon="ui-icon-trash">
+							<p:confirm header="Confirmação"
+								message="Deseja apagar o funcionario?" icon="ui-icon-alert" />
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+									outcome="funcionario.xhtml"/>
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

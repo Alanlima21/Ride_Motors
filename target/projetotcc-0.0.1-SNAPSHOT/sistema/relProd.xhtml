@@ -19,12 +19,12 @@
 					<h3 align="center">Gerar Relatório de Produtos</h3>
 				</p:toolbarGroup>
 			</p:toolbar>
-			<h:form id="form">
+			<h:form>
 			<br/>
 				<div align="center">
 					<p:panelGrid columns="2" border="2">
 						<p:outputLabel value="Nome" />
-						<p:inputText value="#{produtoBean.produto.nome}" id="panel"/>
+						<p:inputText value="#{produtoBean.produto.nome}" />
 						<p:outputLabel value="Fornecedor" />
 						<p:inputText value="#{produtoBean.produto.fornecedor}" />
 					</p:panelGrid>
