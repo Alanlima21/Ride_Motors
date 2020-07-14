@@ -8,7 +8,7 @@ import javax.faces.convert.FacesConverter;
 import objeto.dao.FuncionarioDao;
 import objeto.entidade.Funcionario;
 import objeto.tratamentoErro.ErroSistema;
-
+//Não ta pronto
 @FacesConverter("funcionarioConverter")
 public class FuncionarioConverter implements Converter {
 

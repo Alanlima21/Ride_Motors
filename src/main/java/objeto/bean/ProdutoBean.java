@@ -76,9 +76,6 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 		this.produto = produto;
 	}
 	public void imprimir() throws ErroSistema, FileNotFoundException{
-		/*Relatorio relatorio = new Relatorio();
-		lista = produtoDao.buscarProd(lista);
-		relatorio.getRelatorio(lista);*/
 		
 		try {
 			
