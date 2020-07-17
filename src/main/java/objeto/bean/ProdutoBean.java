@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -78,7 +79,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 		this.produto = produto;
 	}
 
-	public void imprimir() throws ErroSistema, FileNotFoundException {
+	public void imprimir() {
 
 		try {
 
@@ -107,9 +108,9 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 			JasperPrintManager.printReport(print, true);
 
 		} catch (JRException ex) {
-			Logger.getLogger(ProdutoBean.class.getName()).log(Level.SEVERE, null, ex);
-			ex.printStackTrace();
-
+			Logger.getLogger(ProdutoBean.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+		}catch(FileNotFoundException e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,e.getMessage(),null));
 		}
 	}
 }

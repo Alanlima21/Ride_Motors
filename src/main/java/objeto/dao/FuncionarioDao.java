@@ -101,8 +101,8 @@ public class FuncionarioDao implements CrudDao<Funcionario> {
 
 			if (rs.next()) {
 				Funcionario funcionario = new Funcionario();
+				funcionario.setId(rs.getInt("id_func"));
 				funcionario.setNome(rs.getString("nome_func"));
-
 				System.out.println(funcionario.getNome());
 				return funcionario;
 			}

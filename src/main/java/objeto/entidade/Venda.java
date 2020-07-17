@@ -6,7 +6,7 @@ public class Venda {
 
 	private Integer id;
 	private int quantidadePedido;
-	private double valor;
+	private Double valor;
 	private int funcionario;
 	private int cliente;
 	private int totalVendas;
@@ -35,7 +35,7 @@ public class Venda {
 	}
 
 	public void setValor(double valor) {
-		this.valor = valor;
+		 this.valor = valor;
 	}
 	
 	public int getFuncionario() {

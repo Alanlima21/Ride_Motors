@@ -22,7 +22,7 @@
 						<h4 align="center">Vendas</h4>
 					</p:toolbarGroup>
 				</p:toolbar>
-				<p:dataTable value="#{vendaBean.produtos}" var="produto"
+				<p:dataTable value="#{vendaBean.getProdutos()}" var="produto"
 					paginator="true" paginatorPosition="bottom" rows="4" id="venda"
 					filteredValue="#{vendaBean.listaProdutos}"
 					emptyMessage="Nenhum registro encontrado">
@@ -96,7 +96,9 @@
 
 					</p:panelGrid>
 					<h:outputText id="total"
-						value="Valor Parcial: #{vendaBean.vendaCadastro.valor}" />
+						value="Valor Parcial: #{vendaBean.vendaCadastro.valor}">
+						<f:convertNumber type="currency" currencySymbol="R$"/>
+					</h:outputText>
 				</div>
 				<div align="center">
 					<p:commandButton update=":frmVenda:totalNota :frmVenda:horario "
@@ -117,7 +119,7 @@
 								<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
 								<f:selectItems value="#{vendaBean.funcionarios}"
 									var="funcionario" itemValue="#{funcionario}"
-									itemLabel="#{funcionario.nome} - #{funcionario.funcao}"  />
+									itemLabel="#{funcionario.nome} - #{funcionario.funcao}" />
 							</p:selectOneMenu>
 
 							<h:outputText value="Cliente " />

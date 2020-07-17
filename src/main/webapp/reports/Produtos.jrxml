@@ -244,7 +244,7 @@ WHERE
 				<reportElement x="460" y="0" width="30" height="30" uuid="69d99101-fbf9-426b-b193-4f1435868b19"/>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
-			<textField pattern="¤#,##0.###;¤(#,##0.###-)">
+			<textField pattern="¤#,##0.00#;¤(#,##0.00#-)">
 				<reportElement x="490" y="0" width="70" height="20" uuid="0fe2b700-c594-4104-a8f5-2ec256ca4802"/>
 				<textFieldExpression><![CDATA[$V{Sum}]]></textFieldExpression>
 			</textField>

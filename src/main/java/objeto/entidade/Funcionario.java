@@ -58,6 +58,11 @@ public class Funcionario {
 	}
 
 	@Override
+	public String toString() {
+		return "Funcionario [id=" + id + ", nome=" + nome + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

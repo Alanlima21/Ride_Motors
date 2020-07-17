@@ -3,11 +3,13 @@ package objeto.bean;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import objeto.converter.FuncionarioConverter;
 import objeto.dao.ClienteDao;
 import objeto.dao.FuncionarioDao;
 import objeto.dao.ProdutoDao;
@@ -23,19 +25,13 @@ import objeto.tratamentoErro.ErroSistema;
 @SessionScoped
 public class VendaBean extends CrudBean<Venda, VendaDao> {
 
-	FuncionarioDao funcionarioDao;
-	ClienteDao clienteDao;
 	ProdutoDao produtoDao = new ProdutoDao();
-
-	Cliente cliente = new Cliente();
-	Produto produto;
 	VendaDao vendaDao = new VendaDao();
-
-	Funcionario funcionario;
 	Venda vendaCadastro;
 
 	private Venda venda = new Venda();
 	private List<Item> listaItens;
+	private List<Produto> listaProdutos;
 
 	public Venda getVenda() {
 		return venda;
@@ -43,16 +39,6 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 
 	public void setVenda(Venda venda) {
 		this.venda = venda;
-	}
-
-	private List<Produto> listaProdutos;
-
-	public List<Produto> getListaProdutos() {
-		return listaProdutos;
-	}
-
-	public void setListaProdutos(List<Produto> listaProdutos) {
-		this.listaProdutos = listaProdutos;
 	}
 
 	@Override
@@ -66,6 +52,14 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	@Override
 	public Venda criarNovaEntidade() {
 		return new Venda();
+	}
+
+	public List<Produto> getListaProdutos() {
+		return listaProdutos;
+	}
+
+	public void setListaProdutos(List<Produto> listaProdutos) {
+		this.listaProdutos = listaProdutos;
 	}
 
 	public List<Funcionario> getFuncionarios() throws ErroSistema {
@@ -89,7 +83,10 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	public List<Produto> getProdutos() throws ErroSistema {
 		try {
 			ProdutoDao produtoDao = new ProdutoDao();
-			return produtoDao.buscar();
+			List<Produto> prod = produtoDao.buscar().stream()
+					.filter(p -> p.getQuantidade() > 0)
+					.collect(Collectors.toList());
+			return prod;
 		} catch (ErroSistema ex) {
 			throw new ErroSistema("Erro ao buscar produto!", ex);
 		}
@@ -144,6 +141,7 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 			item.setQuantidade(itemTemp.getQuantidade() + 1);
 			item.setValor(produto.getPreco() * item.getQuantidade());
 			listaItens.set(posicao, item);
+
 		}
 		vendaCadastro.setValor(vendaCadastro.getValor() + produto.getPreco());
 	}
@@ -158,11 +156,13 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 			if (itemTemp.getProduto().equals(item.getProduto())) {
 				posicao = i;
 			}
+
 		}
 		if (posicao > -1) {
 			listaItens.remove(posicao);
 			vendaCadastro.setValor(vendaCadastro.getValor() - item.getValor());
 		}
+
 	}
 
 	public void horario() {
@@ -176,20 +176,13 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	public void removeServico() {
 		vendaCadastro.setValor(vendaCadastro.getValor() - venda.getServico());
 	}
-
+	Funcionario funcionario;
 	public void finalizarVenda() throws ErroSistema {
 
 		vendaCadastro.setValor(vendaCadastro.getValor());
 		vendaCadastro.setHorario(vendaCadastro.getHorario());
 		vendaCadastro.setTotalVendas(vendaCadastro.getTotalVendas() + 1);
-
-		/*
-		 * funcionario que vendeu
-		 * vendaCadastro.setFuncionario(funcionarioBean.getEntidade().getId()); pegar o
-		 * cliente que comprou vendaCadastro.setCliente(2); FuncionarioDao
-		 * funcionarioDao = new FuncionarioDao(); funcionarioDao.buscarFuncionario(2);
-		 * vendaCadastro.setFuncionario(funcionario.getId());
-		 */
+		
 		vendaDao.salvar(vendaCadastro);
 
 		vendaCadastro = new Venda();
@@ -208,4 +201,5 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 		adicionarMensagem("Venda realizada com sucesso!", FacesMessage.SEVERITY_INFO);
 
 	}
+
 }
