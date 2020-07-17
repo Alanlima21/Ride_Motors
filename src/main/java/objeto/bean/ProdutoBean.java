@@ -82,19 +82,13 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 
 		try {
 
-			/*
-			 * IComponent tabela =
-			 * FacesContext.getCurrentInstance().getViewRoot().findComponent("form:panel");
-			 * Map<String, Object> filtros = tabela.getAttributes();
-			 */
-
 			String nome = produto.getNome();
 			String fornecedor = produto.getFornecedor();
 
-			File Jasper = new File(
-					FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/produtos.jasper"));
+			File Jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/produtos.jasper"));
 
 			Map<String, Object> params = new HashMap<>();
+			
 			if (nome == null) {
 				params.put("PRODUTO_NOME", "%%");
 			} else {

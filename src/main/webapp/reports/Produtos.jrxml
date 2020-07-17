@@ -15,7 +15,7 @@
 FROM oficina.produto
 WHERE 
 	 oficina.produto.fornecedor_prod LIKE $P{PRODUTO_FORNECEDOR} 
-	 OR oficina.produto.nome_prod LIKE $P{PRODUTO_NOME}]]>
+	AND oficina.produto.nome_prod LIKE $P{PRODUTO_NOME}]]>
 	</queryString>
 	<field name="nome_prod" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="nome_prod"/>
@@ -152,7 +152,7 @@ WHERE
 	</columnHeader>
 	<detail>
 		<band height="30" splitType="Stretch">
-			<textField>
+			<textField textAdjust="StretchHeight">
 				<reportElement x="50" y="0" width="100" height="30" uuid="a131d6d6-7b68-4652-8102-c6b7e3eaa4ca">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="061632de-5ef6-41e8-956b-c9a856aa98f3"/>
 				</reportElement>
