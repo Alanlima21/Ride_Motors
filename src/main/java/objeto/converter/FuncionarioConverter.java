@@ -22,7 +22,7 @@ public class FuncionarioConverter implements Converter {
 			System.out.println(funcionario.getId());
 			
 			return funcionario;
-		} catch (RuntimeException | ErroSistema ex) {
+		} catch (RuntimeException e) {
 			return null;
 		}
 		

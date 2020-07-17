@@ -19,17 +19,17 @@
 					<h3 align="center">Gerar Relatório de Produtos</h3>
 				</p:toolbarGroup>
 			</p:toolbar>
-			<h:form>
-			<br/>
+			<h:form id="form">
+				<br />
 				<div align="center">
-					<p:panelGrid columns="2" border="2">
+					<p:panelGrid columns="2" border="2" id="panel">
 						<p:outputLabel value="Nome" />
 						<p:inputText value="#{produtoBean.produto.nome}" />
 						<p:outputLabel value="Fornecedor" />
 						<p:inputText value="#{produtoBean.produto.fornecedor}" />
 					</p:panelGrid>
 				</div>
-				<br/>
+				<br />
 				<div align="center">
 					<p:commandButton value="Gerar Relatório" icon="ui-icon-print"
 						actionListener="#{produtoBean.imprimir}" />

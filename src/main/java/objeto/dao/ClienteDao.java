@@ -15,47 +15,58 @@ public class ClienteDao implements CrudDao<Cliente> {
 
 	@Override
 	public void salvar(Cliente cliente) throws ErroSistema {
+		PreparedStatement ps = null;
 		try {
-		Connection conexao = Conexao.getConexao();
-		PreparedStatement ps;
-		if(cliente.getId() == null) {
-		
-				ps = conexao.prepareStatement("INSERT INTO cliente(nome_clie, cpf_clie, email_clie, data_clie) VALUES (?,?,?,?)");
-		}else {
-			ps =conexao.prepareStatement("update cliente set nome_clie=?, cpf_clie=?, email_clie=?, data_clie=? where id_clie=?");
-			ps.setInt(5, cliente.getId());
+			Connection conexao = Conexao.getConexao();
+			
+			if (cliente.getId() == null) {
+
+				ps = conexao.prepareStatement(
+						"INSERT INTO cliente(nome_clie, cpf_clie, email_clie, data_clie) VALUES (?,?,?,?)");
+			} else {
+				ps = conexao.prepareStatement(
+						"update cliente set nome_clie=?, cpf_clie=?, email_clie=?, data_clie=? where id_clie=?");
+				ps.setInt(5, cliente.getId());
+			}
+			ps.setString(1, cliente.getNome());
+			ps.setString(2, cliente.getCpf());
+			ps.setString(3, cliente.getEmail());
+			ps.setString(4, cliente.getData());
+			ps.execute();		
+		} catch (Exception ex) {
+			throw new ErroSistema("Erro ao salvar Cliente!", ex);
+		} finally {
+			Conexao.fecharPreparedStatement(ps);
+			Conexao.fecharConexao();
 		}
-		ps.setString(1, cliente.getNome());
-		ps.setString(2, cliente.getCpf());
-		ps.setString(3, cliente.getEmail());
-		ps.setString(4, cliente.getData());
-		ps.execute();
-		Conexao.fecharConexao();
-	} catch (Exception ex) {
-		throw new ErroSistema("Erro ao salvar Cliente!", ex);
-	}
 	}
 
 	@Override
 	public void deletar(Cliente cliente) throws ErroSistema {
+		PreparedStatement ps = null;
 		try {
-		Connection conexao = Conexao.getConexao();
-		PreparedStatement ps;
-		ps = conexao.prepareStatement("delete from cliente where id_clie=?");
-		ps.setInt(1, cliente.getId());
-		ps.execute();
-		} catch(SQLException ex){
+			Connection conexao = Conexao.getConexao();
+			ps = conexao.prepareStatement("delete from cliente where id_clie=?");
+			ps.setInt(1, cliente.getId());
+			ps.execute();
+		} catch (SQLException ex) {
 			throw new ErroSistema("Erro ao deletar Cliente!", ex);
+		} finally {
+			Conexao.fecharPreparedStatement(ps);
+			Conexao.fecharConexao();
 		}
-		
+
 	}
 
 	@Override
 	public List<Cliente> buscar() throws ErroSistema {
-		Connection conexao = Conexao.getConexao();
+
+		ResultSet resultset = null;
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = conexao.prepareStatement("select * from cliente");
-			ResultSet resultset = ps.executeQuery();
+			Connection conexao = Conexao.getConexao();
+			ps = conexao.prepareStatement("select * from cliente");
+			resultset = ps.executeQuery();
 			List<Cliente> clientes = new ArrayList<>();
 			while (resultset.next()) {
 				Cliente cliente = new Cliente();
@@ -66,12 +77,15 @@ public class ClienteDao implements CrudDao<Cliente> {
 				cliente.setData(resultset.getString("data_clie"));
 				clientes.add(cliente);
 			}
-			Conexao.fecharConexao();
 			return clientes;
 		} catch (SQLException ex) {
 			throw new ErroSistema("Erro ao buscar Cliente!", ex);
+		} finally {
+			Conexao.fecharPreparedStatement(ps);
+			Conexao.fecharResultset(resultset);
+			Conexao.fecharConexao();
 		}
 
 	}
-	
+
 }

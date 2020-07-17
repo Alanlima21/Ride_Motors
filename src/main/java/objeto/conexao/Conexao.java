@@ -3,6 +3,8 @@ package objeto.conexao;
 import objeto.tratamentoErro.ErroSistema;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Conexao {
@@ -37,4 +39,22 @@ public class Conexao {
 			}
 		}
 	}
-}
+	public static void fecharResultset(ResultSet rs) {
+		if(rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				throw new ErroSistema(e.getMessage());
+			}
+		}
+	}
+		public static void fecharPreparedStatement(PreparedStatement ps) {
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					throw new ErroSistema(e.getMessage());
+				}
+			}
+	}
+ }

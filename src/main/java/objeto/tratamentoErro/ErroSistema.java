@@ -1,6 +1,6 @@
 package objeto.tratamentoErro;
 
-public class ErroSistema extends Exception {
+public class ErroSistema extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	public ErroSistema(String message) {

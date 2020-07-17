@@ -3,6 +3,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="prod" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ce6c793-132f-4152-b84c-fc79b582db60">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oficina Data Adapter"/>
+	<parameter name="PRODUTO_NOME" class="java.lang.String"/>
+	<parameter name="PRODUTO_FORNECEDOR" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT oficina.produto.nome_prod,
 	oficina.produto.quantidade_prod,
@@ -10,7 +12,10 @@
 	oficina.produto.id_prod,
 	oficina.produto.telefone_prod,
 	oficina.produto.fornecedor_prod
-FROM oficina.produto]]>
+FROM oficina.produto
+WHERE 
+	 oficina.produto.fornecedor_prod LIKE $P{PRODUTO_FORNECEDOR} 
+	 OR oficina.produto.nome_prod LIKE $P{PRODUTO_NOME}]]>
 	</queryString>
 	<field name="nome_prod" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="nome_prod"/>
@@ -140,7 +145,7 @@ FROM oficina.produto]]>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total
+				<text><![CDATA[subTotal
 ]]></text>
 			</staticText>
 		</band>
@@ -195,7 +200,7 @@ FROM oficina.produto]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fornecedor_prod}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤#,##0.###;¤(#,##0.###-)">
+			<textField pattern="¤#,##0.00#;¤(#,##0.00#-)">
 				<reportElement x="410" y="0" width="80" height="30" uuid="4db7fd34-fc9e-4198-be32-b1f66c345a4f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4259fdd0-bb72-4d08-b285-1fe49620e495"/>
 				</reportElement>
@@ -219,7 +224,7 @@ FROM oficina.produto]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{telefone_prod}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Band" pattern="¤#,###.###;¤(#,###.###-)">
+			<textField evaluationTime="Band" pattern="¤#,##0.00#;¤(#,##0.00#-)">
 				<reportElement x="490" y="0" width="70" height="30" uuid="45d835ba-6495-4d9d-b24e-f7bbe6d426cc"/>
 				<box>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
