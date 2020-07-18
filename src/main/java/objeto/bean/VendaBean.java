@@ -86,6 +86,7 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 			List<Produto> prod = produtoDao.buscar().stream()
 					.filter(p -> p.getQuantidade() > 0)
 					.collect(Collectors.toList());
+			prod.sort((p1,p2) -> p1.getNome().toUpperCase().compareTo(p2.getNome().toUpperCase()));
 			return prod;
 		} catch (ErroSistema ex) {
 			throw new ErroSistema("Erro ao buscar produto!", ex);
