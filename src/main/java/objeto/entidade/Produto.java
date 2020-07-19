@@ -1,7 +1,7 @@
 package objeto.entidade;
 
 
-public class Produto {
+public class Produto{
 
 	private Integer id;
 	private String nome;

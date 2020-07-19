@@ -27,14 +27,15 @@ public class LoginBean {
 
 	public String logar() throws ErroSistema {
 		if(loginDao.login(login.getLogin(), login.getSenha())) {
+			FacesContext.getCurrentInstance().addMessage(
+                    null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Logado com sucesso!", 
+                   null));
 			return "home.xhtml";
 		}else {
 			FacesContext.getCurrentInstance().addMessage(
-			        null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Usuario ou senha incorretos","Erro"));
+                    null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Usuário ou senha incorretos!", 
+                   null));
 			 
-			  FacesContext.getCurrentInstance()
-			      .getExternalContext()
-			      .getFlash().setKeepMessages(true);
 			  return "index.xhtml?faces-redirect=true";
 		}
 	}

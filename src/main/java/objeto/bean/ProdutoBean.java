@@ -43,7 +43,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 	private List<Produto> lista = new ArrayList<Produto>();
 
 	public List<Produto> getLista() {
-		return lista;
+		 return lista;
 	}
 
 	public void setLista(List<Produto> lista) {

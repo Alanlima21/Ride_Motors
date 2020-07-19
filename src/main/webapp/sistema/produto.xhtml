@@ -70,7 +70,7 @@
 					rendered="#{produtoBean.busca == true}" paginator="true"
 					paginatorPosition="bottom" rows="5"
 					emptyMessage="Nenhum registro encontrado"
-					filteredValue="#{produtoBean.listaProdutos}">
+					filteredValue="#{produtoBean.listaProdutos}" id="table" >
 
 					<p:column headerText="Código" width="50px;"
 						style="text-align:center">
@@ -111,7 +111,7 @@
 							update="@form" icon="ui-icon-pencil" />
 
 						<p:commandButton action="#{produtoBean.deletar(produto)}"
-							update="@form" icon="ui-icon-trash">
+							update="@form:table" icon="ui-icon-trash">
 							<p:confirm header="Confirmação"
 								message="Deseja apagar o produto?" icon="ui-icon-alert" />
 							<p:confirmDialog global="true" showEffect="fade"
