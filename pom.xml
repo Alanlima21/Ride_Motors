@@ -7,7 +7,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>ProjetoTcc</name>
-	
+
+	<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
+
 	<!-- Repositórios -->
 	<repositories>
 		<repository>
@@ -17,7 +22,7 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
-	
+
 	<dependencies>
 		<!-- JSF -->
 		<dependency>
@@ -39,14 +44,14 @@
 			<artifactId>primefaces</artifactId>
 			<version>7.0</version>
 		</dependency>
-		
+
 		<!-- Tema Primefaces -->
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
 			<artifactId>all-themes</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>

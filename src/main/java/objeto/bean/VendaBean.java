@@ -3,11 +3,13 @@ package objeto.bean;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import objeto.converter.FuncionarioConverter;
 import objeto.dao.ClienteDao;
@@ -79,7 +81,7 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 			throw new ErroSistema("Erro ao buscar cliente!", ex);
 		}
 	}
-
+		
 	public List<Produto> getProdutos() throws ErroSistema {
 		try {
 			ProdutoDao produtoDao = new ProdutoDao();

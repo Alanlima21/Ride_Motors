@@ -3,8 +3,8 @@ package objeto.entidade;
 public class Item {
 
 	private Integer codigo;
-	private double valor;
-	private int quantidade;
+	private Double valor;
+	private Integer quantidade;
 	
 	
 	private Produto produto;
@@ -22,10 +22,10 @@ public class Item {
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
-	public int getQuantidade() {
+	public Integer getQuantidade() {
 		return quantidade;
 	}
-	public void setQuantidade(int quantidade) {
+	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
 	public Produto getProduto() {
