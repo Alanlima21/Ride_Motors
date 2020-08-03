@@ -12,6 +12,10 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff41dcedd827970bd4f07802c6eb01626c0ea3eb
 	<!-- Repositórios -->
 	<repositories>
 		<repository>
