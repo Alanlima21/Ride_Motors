@@ -9,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import objeto.converter.FuncionarioConverter;
 import objeto.dao.ClienteDao;
 import objeto.dao.FuncionarioDao;
 import objeto.dao.ProdutoDao;
@@ -28,10 +27,29 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	ProdutoDao produtoDao = new ProdutoDao();
 	VendaDao vendaDao = new VendaDao();
 	Venda vendaCadastro;
-
 	private Venda venda = new Venda();
 	private List<Item> listaItens;
 	private List<Produto> listaProdutos;
+	private List<Cliente> listaClientes;
+	private Funcionario funcionario = new Funcionario();
+	
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+	
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+	
+	
+	public List<Cliente> getListaClientes() {
+		return listaClientes;
+	}
+
+	public void setListaClientes(List<Cliente> listaClientes) {
+		this.listaClientes = listaClientes;
+	}
+
 
 	public Venda getVenda() {
 		return venda;
@@ -65,7 +83,9 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	public List<Funcionario> getFuncionarios() throws ErroSistema {
 		try {
 			FuncionarioDao funcionarioDao = new FuncionarioDao();
-			return funcionarioDao.buscar();
+			List<Funcionario> listFunc = funcionarioDao.buscar().stream().filter(F -> F.getFuncao().equals("Vendedor"))
+					.collect(Collectors.toList());
+			return listFunc;
 		} catch (ErroSistema ex) {
 			throw new ErroSistema("Erro ao buscar Funcionario!", ex);
 		}
@@ -74,7 +94,9 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	public List<Cliente> getClientes() throws ErroSistema {
 		try {
 			ClienteDao clienteDao = new ClienteDao();
-			return clienteDao.buscar();
+			List<Cliente> cliente = clienteDao.buscar();
+			cliente.sort((C1, C2) -> C1.getNome().toUpperCase().compareTo(C2.getNome().toUpperCase()));
+			return cliente;
 		} catch (ErroSistema ex) {
 			throw new ErroSistema("Erro ao buscar cliente!", ex);
 		}
@@ -83,10 +105,9 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	public List<Produto> getProdutos() throws ErroSistema {
 		try {
 			ProdutoDao produtoDao = new ProdutoDao();
-			List<Produto> prod = produtoDao.buscar().stream()
-					.filter(p -> p.getQuantidade() > 0)
+			List<Produto> prod = produtoDao.buscar().stream().filter(p -> p.getQuantidade() > 0)
 					.collect(Collectors.toList());
-			prod.sort((p1,p2) -> p1.getNome().toUpperCase().compareTo(p2.getNome().toUpperCase()));
+			prod.sort((p1, p2) -> p1.getNome().toUpperCase().compareTo(p2.getNome().toUpperCase()));
 			return prod;
 		} catch (ErroSistema ex) {
 			throw new ErroSistema("Erro ao buscar produto!", ex);
@@ -135,11 +156,13 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 
 		if (posicao < 0) {
 			item.setQuantidade(1);
+			vendaCadastro.setquantidadePedido(item.getQuantidade() + item.getQuantidade());
 			item.setValor(produto.getPreco());
 			listaItens.add(item);
 		} else {
 			Item itemTemp = listaItens.get(posicao); // variavel para guardar posição do item encontrado
 			item.setQuantidade(itemTemp.getQuantidade() + 1);
+			vendaCadastro.setquantidadePedido(item.getQuantidade() + 1);
 			item.setValor(produto.getPreco() * item.getQuantidade());
 			listaItens.set(posicao, item);
 
@@ -177,16 +200,18 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	public void removeServico() {
 		vendaCadastro.setValor(vendaCadastro.getValor() - venda.getServico());
 	}
-	Funcionario funcionario;
-	public void finalizarVenda() throws ErroSistema {
 
+	public void finalizarVenda() throws ErroSistema {
 		vendaCadastro.setValor(vendaCadastro.getValor());
 		vendaCadastro.setHorario(vendaCadastro.getHorario());
-		vendaCadastro.setTotalVendas(vendaCadastro.getTotalVendas() + 1);
-		
+		vendaCadastro.setTotalVendas(vendaCadastro.getquantidadePedido());
+		System.out.println(funcionario.getId());
+		vendaCadastro.setFuncionario(funcionario);
+		vendaCadastro.setCliente(getClientes().get(0));
 		vendaDao.salvar(vendaCadastro);
 
 		vendaCadastro = new Venda();
+
 		vendaCadastro.setValor(0);
 
 		// faz a baixa de estoque

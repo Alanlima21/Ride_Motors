@@ -114,8 +114,7 @@
 
 						<p:panelGrid columns="2" border="1">
 							<h:outputText value="Funcionario " />
-							<p:selectOneMenu filter="true" value="#{vendaBean.entidades}"
-								converter="funcionarioConverter">
+							<p:selectOneMenu  value="#{vendaBean.funcionario}">
 								<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
 								<f:selectItems value="#{vendaBean.funcionarios}"
 									var="funcionario" itemValue="#{funcionario}"
@@ -123,7 +122,7 @@
 							</p:selectOneMenu>
 
 							<h:outputText value="Cliente " />
-							<p:selectOneMenu filter="true" value="#{vendaBean.entidades}">
+							<p:selectOneMenu filter="true" value="#{vendaBean.listaClientes}">
 								<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
 								<f:selectItems value="#{vendaBean.clientes}" var="cliente"
 									itemValue="#{cliente}"
@@ -147,7 +146,8 @@
 						<div align="center">
 							<p:commandButton value="Finalizar"
 								actionListener="#{vendaBean.finalizarVenda}"
-								update=":frmVenda :msgGlobal" oncomplete="PF('dialog').hide();" />
+								update=":frmVenda :msgGlobal" oncomplete="PF('dialog').hide();"/>
+
 							<br /> <br />
 							<p:commandButton value="Voltar" onclick="PF('dialog').hide();" />
 						</div>

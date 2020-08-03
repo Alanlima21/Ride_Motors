@@ -7,8 +7,8 @@ public class Venda {
 	private Integer id;
 	private int quantidadePedido;
 	private Double valor;
-	private int funcionario;
-	private int cliente;
+	private Funcionario funcionario;
+	private Cliente cliente;
 	private int totalVendas;
 	public Date horario;
 	private double servico;
@@ -38,19 +38,19 @@ public class Venda {
 		 this.valor = valor;
 	}
 	
-	public int getFuncionario() {
+	public Funcionario getFuncionario() {
 		return funcionario;
 	}
 	
-	public void setFuncionario(int funcionario) {
+	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
 	
-	public int getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 	
-	public void setCliente(int cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 	

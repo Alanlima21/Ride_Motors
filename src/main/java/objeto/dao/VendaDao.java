@@ -23,15 +23,15 @@ public class VendaDao implements CrudDao<Venda> {
 
 			if (venda.getId() == null) {
 				ps = conexao
-						.prepareStatement("INSERT INTO venda(quantidade_vend, valor_vend, data_vend) Values(?,?,?)");
+						.prepareStatement("INSERT INTO venda(quantidade_vend, valor_vend, data_vend, funcionario_vend, cliente_vend) Values(?,?,?,?,?)");
 			} else {
 				new ErroSistema("Quantidade insuficiente no estoque!");
 			}
 			ps.setInt(1, venda.getTotalVendas());
 			ps.setDouble(2, venda.getValor());
 			ps.setDate(3, new java.sql.Date(venda.getHorario().getTime()));
-			// ps.setInt(4, venda.getFuncionario());
-			// ps.setInt(5, venda.getCliente());
+			ps.setInt(4, venda.getFuncionario().getId());
+			ps.setInt(5, venda.getCliente().getId());
 			ps.execute();
 		} catch (SQLException ex) {
 			throw new ErroSistema("Erro ao salvar Venda!", ex);

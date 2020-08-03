@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import objeto.conexao.Conexao;
 import objeto.entidade.Cliente;
@@ -18,7 +20,7 @@ public class ClienteDao implements CrudDao<Cliente> {
 		PreparedStatement ps = null;
 		try {
 			Connection conexao = Conexao.getConexao();
-			
+
 			if (cliente.getId() == null) {
 
 				ps = conexao.prepareStatement(
@@ -32,7 +34,7 @@ public class ClienteDao implements CrudDao<Cliente> {
 			ps.setString(2, cliente.getCpf());
 			ps.setString(3, cliente.getEmail());
 			ps.setString(4, cliente.getData());
-			ps.execute();		
+			ps.execute();
 		} catch (Exception ex) {
 			throw new ErroSistema("Erro ao salvar Cliente!", ex);
 		} finally {
@@ -68,8 +70,13 @@ public class ClienteDao implements CrudDao<Cliente> {
 			ps = conexao.prepareStatement("select * from cliente");
 			resultset = ps.executeQuery();
 			List<Cliente> clientes = new ArrayList<>();
+			Map<Integer, Cliente> map = new HashMap<>();
 			while (resultset.next()) {
-				Cliente cliente = new Cliente();
+				Cliente cliente = map.get(resultset.getInt("id_clie"));
+				if (cliente == null) {
+					cliente = new Cliente();
+					map.put(resultset.getInt("id_clie"), cliente);
+				}
 				cliente.setId(resultset.getInt("id_clie"));
 				cliente.setNome(resultset.getString("nome_clie"));
 				cliente.setCpf(resultset.getString("cpf_clie"));
