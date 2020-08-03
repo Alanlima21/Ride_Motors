@@ -85,48 +85,50 @@
 				<p:separator />
 
 				<div align="center">
-
 					<p:panelGrid columns="4">
 						<p:outputLabel value="Serviço R$ " />
 						<p:inputText value="#{vendaBean.venda.servico}" size="5" />
 						<p:commandButton value="+" action="#{vendaBean.adicionaServico}"
-							update=":frmVenda:totalNota :frmVenda:total" />
+							update=":dialog:totalNota :frmVenda:total" />
 						<p:commandButton value="-" action="#{vendaBean.removeServico}"
-							update=":frmVenda:totalNota :frmVenda:total" />
+							update=":dialog:totalNota :frmVenda:total" />
 
 					</p:panelGrid>
 					<h:outputText id="total"
 						value="Valor Parcial: #{vendaBean.vendaCadastro.valor}">
-						<f:convertNumber type="currency" currencySymbol="R$"/>
+						<f:convertNumber type="currency" currencySymbol="R$" />
 					</h:outputText>
 				</div>
 				<div align="center">
-					<p:commandButton update=":frmVenda:totalNota :frmVenda:horario "
+					<p:commandButton update=":dialog:totalNota :dialog:horario "
 						actionListener="#{vendaBean.horario}" value="Finalizar Compra"
 						oncomplete="PF('dialog').show();" icon="ui-icon-cart" />
 
 				</div>
+			</h:form>
 
-				<div align="center">
-					<p:dialog header="Realizar Venda" widgetVar="dialog"
-						showEffect="explode" height="350" resizable="false"
-						closable="true" modal="true" appendTo="@(body)" responsive="true">
-
+			<div align="center">
+				<p:dialog header="Realizar Venda" widgetVar="dialog"
+					showEffect="explode" height="350" resizable="false" closable="true"
+					modal="true" appendTo="@(body)" responsive="true">
+					<h:form id="dialog">
 						<p:panelGrid columns="2" border="1">
 							<h:outputText value="Funcionario " />
-							<p:selectOneMenu  value="#{vendaBean.funcionario}">
+							<p:selectOneMenu value="#{vendaBean.vendaCadastro.funcionario}"
+								converter="omnifaces.SelectItemsConverter">
 								<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
 								<f:selectItems value="#{vendaBean.funcionarios}"
-									var="funcionario" itemValue="#{funcionario}"
-									itemLabel="#{funcionario.nome} - #{funcionario.funcao}" />
+									itemValue="#{funcionario}" />
+								<!--  <f:ajax render="selected_item"  />-->
 							</p:selectOneMenu>
 
 							<h:outputText value="Cliente " />
-							<p:selectOneMenu filter="true" value="#{vendaBean.listaClientes}">
+							<p:selectOneMenu filter="true"
+								value="#{vendaBean.vendaCadastro.cliente}"
+								converter="omnifaces.SelectItemsConverter">
 								<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-								<f:selectItems value="#{vendaBean.clientes}" var="cliente"
-									itemValue="#{cliente}"
-									itemLabel="#{cliente.nome} - #{cliente.cpf}" />
+								<f:selectItems value="#{vendaBean.clientes}"
+									itemValue="#{cliente}" />
 							</p:selectOneMenu>
 
 							<p:outputLabel value="Horário:" />
@@ -145,16 +147,18 @@
 						<br />
 						<div align="center">
 							<p:commandButton value="Finalizar"
-								actionListener="#{vendaBean.finalizarVenda}"
-								update=":frmVenda :msgGlobal" oncomplete="PF('dialog').hide();"/>
+								action="#{vendaBean.finalizarVenda}"
+								update=":frmVenda :msgGlobal" oncomplete="PF('dialog').hide();" />
 
 							<br /> <br />
 							<p:commandButton value="Voltar" onclick="PF('dialog').hide();" />
 						</div>
-					</p:dialog>
-				</div>
+					</h:form>
 
-			</h:form>
+				</p:dialog>
+			</div>
+
+
 		</ui:define>
 	</ui:composition>
 </h:body>

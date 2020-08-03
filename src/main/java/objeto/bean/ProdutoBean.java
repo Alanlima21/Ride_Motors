@@ -14,11 +14,7 @@ import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-
-import org.primefaces.component.cache.UICacheRenderer;
-import org.primefaces.component.datatable.DataTable;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -29,7 +25,6 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import objeto.conexao.Conexao;
 import objeto.dao.ProdutoDao;
 import objeto.entidade.Produto;
-import objeto.tratamentoErro.ErroSistema;
 
 @ManagedBean
 @SessionScoped

@@ -1,5 +1,6 @@
 package objeto.entidade;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 public class Venda {
@@ -12,7 +13,7 @@ public class Venda {
 	private int totalVendas;
 	public Date horario;
 	private double servico;
-
+	
 	
 	public Integer getId() {
 		return id;
@@ -31,11 +32,11 @@ public class Venda {
 	}
 
 	public double getValor() {
-		return valor;
+		return converterDoubleDoisDecimais(valor);
 	}
 
 	public void setValor(double valor) {
-		 this.valor = valor;
+		 this.valor =  converterDoubleDoisDecimais(valor);
 	}
 	
 	public Funcionario getFuncionario() {
@@ -84,6 +85,15 @@ public class Venda {
 	
 	public void setServico(Double servico) {
 		this.servico = servico;
+	}
+	
+	public static double converterDoubleDoisDecimais(double precoDouble) {
+	    DecimalFormat fmt = new DecimalFormat("0.00");      
+	    String string = fmt.format(precoDouble);
+	    String[] part = string.split("[,]");
+	    String string2 = part[0]+"."+part[1];
+	        double preco = Double.parseDouble(string2);
+	    return preco;
 	}
 	
 	@Override

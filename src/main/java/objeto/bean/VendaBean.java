@@ -3,13 +3,11 @@ package objeto.bean;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import objeto.dao.ClienteDao;
 import objeto.dao.FuncionarioDao;
@@ -33,7 +31,7 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	private List<Item> listaItens;
 	private List<Produto> listaProdutos;
 	private List<Cliente> listaClientes;
-	private Funcionario funcionario = new Funcionario();
+	private Funcionario funcionario;
 	
 	public Funcionario getFuncionario() {
 		return funcionario;
@@ -207,9 +205,8 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 		vendaCadastro.setValor(vendaCadastro.getValor());
 		vendaCadastro.setHorario(vendaCadastro.getHorario());
 		vendaCadastro.setTotalVendas(vendaCadastro.getquantidadePedido());
-		System.out.println(funcionario.getId());
-		vendaCadastro.setFuncionario(funcionario);
-		vendaCadastro.setCliente(getClientes().get(0));
+		vendaCadastro.setFuncionario(vendaCadastro.getFuncionario());
+		vendaCadastro.setCliente(vendaCadastro.getCliente());
 		vendaDao.salvar(vendaCadastro);
 
 		vendaCadastro = new Venda();

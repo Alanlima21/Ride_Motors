@@ -16,9 +16,6 @@ public class ClienteBean extends CrudBean<Cliente, ClienteDao >{
 	private ClienteDao clienteDao;
 	private List<Cliente> listaClientes; 
 	
-	
-	
-	
 	public List<Cliente> getListaClientes() {
 		return listaClientes;
 	}

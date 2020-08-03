@@ -1,8 +1,7 @@
 package objeto.entidade;
 
-
-
 public class Cliente {
+	
 
 	private Integer id;
 	private String nome;
@@ -41,13 +40,19 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public String getData() {
 		return data;
 	}
 
-	public void setData(String date) {
-		this.data = date;
+	public void setData(String data) {
+		this.data = data;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return getNome() + " - " + getCpf() ;
 	}
 
 	@Override
@@ -71,7 +76,5 @@ public class Cliente {
 			return false;
 		return true;
 	}
-	
-	
 
 }

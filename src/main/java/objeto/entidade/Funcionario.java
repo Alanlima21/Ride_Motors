@@ -59,7 +59,7 @@ public class Funcionario {
 
 	@Override
 	public String toString() {
-		return "Funcionario [id=" + id + ", nome=" + nome + "]";
+	 return (getNome()+ " - "+ getFuncao());
 	}
 
 	@Override
