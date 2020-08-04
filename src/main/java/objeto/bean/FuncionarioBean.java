@@ -12,9 +12,10 @@ import objeto.entidade.Funcionario;
 @SessionScoped
 public class FuncionarioBean extends CrudBean<Funcionario, FuncionarioDao> {
 
-	private FuncionarioDao  funcionarioDao;
+	private FuncionarioDao funcionarioDao;
 	private List<Funcionario> listaFuncionario;
-	
+	private Funcionario funcionario = new Funcionario();
+
 	public List<Funcionario> getListaFuncionario() {
 		return listaFuncionario;
 	}
@@ -25,7 +26,7 @@ public class FuncionarioBean extends CrudBean<Funcionario, FuncionarioDao> {
 
 	@Override
 	public FuncionarioDao getDao() {
-		if(funcionarioDao == null) {
+		if (funcionarioDao == null) {
 			funcionarioDao = new FuncionarioDao();
 		}
 		return funcionarioDao;
@@ -36,4 +37,11 @@ public class FuncionarioBean extends CrudBean<Funcionario, FuncionarioDao> {
 		return new Funcionario();
 	}
 
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
 }

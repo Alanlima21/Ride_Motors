@@ -32,7 +32,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 
 	ProdutoDao produtoDao = new ProdutoDao();
 
-	Produto produto = new Produto();
+	private Produto produto = new Produto();
 	private List<Produto> listaProdutos;
 
 	private List<Produto> lista = new ArrayList<Produto>();

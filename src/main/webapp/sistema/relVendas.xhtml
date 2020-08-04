@@ -20,20 +20,28 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 			<h:form>
-			<br/>
+				<br />
 				<div align="center">
 					<p:panelGrid columns="2" border="2">
-						<p:outputLabel value="Período" />
-						<p:inputText />
 						<p:outputLabel value="Cliente" />
-						<p:inputText />
-						<p:outputLabel value="Funcionario"/>
-						<p:inputText/>
+						<p:inputText value="#{vendaBean.cliente.nome}" />
+						<p:outputLabel value="Funcionario" />
+						<p:inputText value="#{vendaBean.funcionario.nome}" />
+					</p:panelGrid>
+					
+						<p:outputLabel value="Período" style="text-align:'center'" />
+						
+					<p:panelGrid columns="4" border="2">
+						<p:outputLabel value="De:"/>
+						<p:calendar value="#{vendaBean.venda.horario}"/>
+						<p:outputLabel value="A:"/>
+						<p:calendar value="#{vendaBean.venda.datareport}"/>
 					</p:panelGrid>
 				</div>
-				<br/>
+				<br />
 				<div align="center">
-					<p:commandButton value="Gerar Relatório" icon="ui-icon-script" />
+					<p:commandButton value="Gerar Relatório" icon="ui-icon-script"
+						actionListener="#{vendaBean.imprimir}" />
 				</div>
 			</h:form>
 		</ui:define>

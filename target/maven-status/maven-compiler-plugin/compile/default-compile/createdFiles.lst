@@ -1,5 +1,4 @@
 objeto\entidade\Produto.class
-objeto\converter\FuncionarioConverter.class
 objeto\entidade\Cliente.class
 objeto\dao\LoginDao.class
 objeto\dao\CadUsuarioDao.class

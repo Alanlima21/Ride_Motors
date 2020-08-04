@@ -15,6 +15,7 @@ public class ClienteBean extends CrudBean<Cliente, ClienteDao >{
 
 	private ClienteDao clienteDao;
 	private List<Cliente> listaClientes; 
+	private Cliente cliente = new Cliente();
 	
 	public List<Cliente> getListaClientes() {
 		return listaClientes;
@@ -36,5 +37,12 @@ public class ClienteBean extends CrudBean<Cliente, ClienteDao >{
 	public Cliente criarNovaEntidade() {
 		return new Cliente();
 	}
-
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 }

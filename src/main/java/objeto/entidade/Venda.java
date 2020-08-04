@@ -11,8 +11,9 @@ public class Venda {
 	private Funcionario funcionario;
 	private Cliente cliente;
 	private int totalVendas;
-	public Date horario;
+	private Date horario;
 	private double servico;
+	private Date datareport;
 	
 	
 	public Integer getId() {
@@ -85,6 +86,14 @@ public class Venda {
 	
 	public void setServico(Double servico) {
 		this.servico = servico;
+	}
+	
+	public Date getDatareport() {
+		return datareport;
+	}
+	
+	public void setDatareport(Date datareport) {
+		this.datareport = datareport;
 	}
 	
 	public static double converterDoubleDoisDecimais(double precoDouble) {

@@ -1,14 +1,30 @@
 package objeto.bean;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import objeto.conexao.Conexao;
 import objeto.dao.ClienteDao;
 import objeto.dao.FuncionarioDao;
 import objeto.dao.ProdutoDao;
@@ -31,17 +47,25 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	private List<Item> listaItens;
 	private List<Produto> listaProdutos;
 	private List<Cliente> listaClientes;
-	private Funcionario funcionario;
-	
+	private Funcionario funcionario = new Funcionario();
+	private Cliente cliente = new Cliente();
+
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
-	
+
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
 	
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	public List<Cliente> getListaClientes() {
 		return listaClientes;
 	}
@@ -49,7 +73,6 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	public void setListaClientes(List<Cliente> listaClientes) {
 		this.listaClientes = listaClientes;
 	}
-
 
 	public Venda getVenda() {
 		return venda;
@@ -101,7 +124,7 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 			throw new ErroSistema("Erro ao buscar cliente!", ex);
 		}
 	}
-		
+
 	public List<Produto> getProdutos() throws ErroSistema {
 		try {
 			ProdutoDao produtoDao = new ProdutoDao();
@@ -162,7 +185,7 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 		} else {
 			Item itemTemp = listaItens.get(posicao); // variavel para guardar posição do item encontrado
 			item.setQuantidade(itemTemp.getQuantidade() + 1);
-			vendaCadastro.setquantidadePedido(item.getQuantidade() + 1);
+			vendaCadastro.setquantidadePedido(item.getQuantidade());
 			item.setValor(produto.getPreco() * item.getQuantidade());
 			listaItens.set(posicao, item);
 
@@ -224,7 +247,53 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 
 		listaItens = new ArrayList<Item>();
 		adicionarMensagem("Venda realizada com sucesso!", FacesMessage.SEVERITY_INFO);
+	}
 
+	public void imprimir() {
+
+		String nomeCliente = cliente.getNome();
+		String nomeFuncionario = funcionario.getNome();
+		Date data =  venda.getDatareport();
+		 Date data2 =  venda.getHorario();
+		
+		try {
+			File Jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/vendas.jasper"));
+
+			Map<String, Object> params = new HashMap<>();
+			
+			if(nomeCliente == null) {
+				params.put("CLIENTE_NOME", "%%");
+			}else {
+				params.put("CLIENTE_NOME", "%" + nomeCliente + "%");
+			}
+			if(nomeFuncionario == null) {
+				params.put("FUNCIONARIO_Nome", "%%");
+			}else {
+				params.put("FUNCIONARIO_NOME", "%" + nomeFuncionario + "%");
+			}
+			if(data == null) {
+				params.put("DATA_VENDA1", "");
+			}else {
+				params.put("DATA_VENDA1", data);
+			}
+			if(data2 == null) {
+				params.put("DATA_VENDA", "");
+			}else {
+				params.put("DATA_VENDA", data2);
+			}
+			
+			Connection conexao = Conexao.getConexao();
+
+			JasperReport report = (JasperReport) JRLoader.loadObject(new FileInputStream(Jasper));
+			JasperPrint print = JasperFillManager.fillReport(report, params, conexao);
+			JasperPrintManager.printReport(print, true);
+			
+		} catch (JRException ex) {
+			Logger.getLogger(ProdutoBean.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+		} catch (FileNotFoundException e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
 	}
 
 }
