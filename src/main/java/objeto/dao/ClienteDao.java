@@ -33,7 +33,7 @@ public class ClienteDao implements CrudDao<Cliente> {
 			ps.setString(1, cliente.getNome());
 			ps.setString(2, cliente.getCpf());
 			ps.setString(3, cliente.getEmail());
-			ps.setString(4, cliente.getData());
+			ps.setDate(4, new java.sql.Date(cliente.getData().getTime()));
 			ps.execute();
 		} catch (Exception ex) {
 			throw new ErroSistema("Erro ao salvar Cliente!", ex);
@@ -81,7 +81,7 @@ public class ClienteDao implements CrudDao<Cliente> {
 				cliente.setNome(resultset.getString("nome_clie"));
 				cliente.setCpf(resultset.getString("cpf_clie"));
 				cliente.setEmail(resultset.getString("email_clie"));
-				cliente.setData(resultset.getString("data_clie"));
+				cliente.setData(resultset.getDate("data_clie"));
 				clientes.add(cliente);
 			}
 			return clientes;

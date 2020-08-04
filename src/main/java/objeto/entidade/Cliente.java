@@ -1,5 +1,7 @@
 package objeto.entidade;
 
+import java.util.Date;
+
 public class Cliente {
 	
 
@@ -7,7 +9,7 @@ public class Cliente {
 	private String nome;
 	private String cpf;
 	private String email;
-	private String data;
+	private Date data;
 	
 	public Integer getId() {
 		return id;
@@ -41,11 +43,11 @@ public class Cliente {
 		this.email = email;
 	}
 	
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 	
