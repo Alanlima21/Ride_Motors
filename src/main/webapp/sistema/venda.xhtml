@@ -139,7 +139,9 @@
 
 							<h:outputText value="Valor R$ " />
 							<h:outputText id="totalNota"
-								value="#{vendaBean.vendaCadastro.valor}" />
+								value="#{vendaBean.vendaCadastro.valor}" >
+								<f:convertNumber type="currency" />
+								</h:outputText>
 
 						</p:panelGrid>
 

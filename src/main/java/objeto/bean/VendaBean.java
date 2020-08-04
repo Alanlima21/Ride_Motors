@@ -176,20 +176,21 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 
 		Item item = new Item();
 		item.setProduto(produto);
-
+		
+		
 		if (posicao < 0) {
 			item.setQuantidade(1);
-			vendaCadastro.setquantidadePedido(item.getQuantidade() + item.getQuantidade());
 			item.setValor(produto.getPreco());
 			listaItens.add(item);
+			vendaCadastro.setquantidadePedido(item.getQuantidade() + item.getQuantidade());
 		} else {
 			Item itemTemp = listaItens.get(posicao); // variavel para guardar posição do item encontrado
 			item.setQuantidade(itemTemp.getQuantidade() + 1);
-			vendaCadastro.setquantidadePedido(item.getQuantidade());
 			item.setValor(produto.getPreco() * item.getQuantidade());
 			listaItens.set(posicao, item);
-
+			vendaCadastro.setquantidadePedido(listaItens.size());
 		}
+		
 		vendaCadastro.setValor(vendaCadastro.getValor() + produto.getPreco());
 	}
 
@@ -235,7 +236,7 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 		vendaCadastro = new Venda();
 
 		vendaCadastro.setValor(0);
-
+		vendaCadastro.setquantidadePedido(0);
 		// faz a baixa de estoque
 		for (int posicao = 0; posicao < listaItens.size(); posicao++) {
 			Item itemTemp = listaItens.get(posicao);
@@ -261,11 +262,11 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 					FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/vendas.jasper"));
 
 			Map<String, Object> params = new HashMap<>();
-			
-				params.put("CLIENTE_NOME", "%" + nomeCliente + "%");
-				params.put("FUNCIONARIO_NOME", "%" + nomeFuncionario + "%");
-				params.put("DATA_VENDA1", data);
-				params.put("DATA_VENDA", data2);
+
+			params.put("CLIENTE_NOME", "%" + nomeCliente + "%");
+			params.put("FUNCIONARIO_NOME", "%" + nomeFuncionario + "%");
+			params.put("DATA_VENDA1", data);
+			params.put("DATA_VENDA", data2);
 
 			Connection conexao = Conexao.getConexao();
 
