@@ -57,11 +57,11 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
-	
+
 	public Cliente getCliente() {
 		return cliente;
 	}
-	
+
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
@@ -253,46 +253,31 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 
 		String nomeCliente = cliente.getNome();
 		String nomeFuncionario = funcionario.getNome();
-		Date data =  venda.getDatareport();
-		 Date data2 =  venda.getHorario();
-		
+		Date data = venda.getDatareport();
+		Date data2 = venda.getHorario();
+
 		try {
-			File Jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/vendas.jasper"));
+			File Jasper = new File(
+					FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/vendas.jasper"));
 
 			Map<String, Object> params = new HashMap<>();
 			
-			if(nomeCliente == null) {
-				params.put("CLIENTE_NOME", "%%");
-			}else {
 				params.put("CLIENTE_NOME", "%" + nomeCliente + "%");
-			}
-			if(nomeFuncionario == null) {
-				params.put("FUNCIONARIO_Nome", "%%");
-			}else {
 				params.put("FUNCIONARIO_NOME", "%" + nomeFuncionario + "%");
-			}
-			if(data == null) {
-				params.put("DATA_VENDA1", "");
-			}else {
 				params.put("DATA_VENDA1", data);
-			}
-			if(data2 == null) {
-				params.put("DATA_VENDA", "");
-			}else {
 				params.put("DATA_VENDA", data2);
-			}
-			
+
 			Connection conexao = Conexao.getConexao();
 
 			JasperReport report = (JasperReport) JRLoader.loadObject(new FileInputStream(Jasper));
 			JasperPrint print = JasperFillManager.fillReport(report, params, conexao);
 			JasperPrintManager.printReport(print, true);
-			
+
 		} catch (JRException ex) {
-			Logger.getLogger(ProdutoBean.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+			Logger.getLogger(VendaBean.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+			adicionarMensagem(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
 		} catch (FileNotFoundException e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			adicionarMensagem(e.getMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
 

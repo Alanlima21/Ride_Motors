@@ -18,8 +18,10 @@
 				<p:toolbarGroup align="center">
 					<h3 align="center">Gerar Relatório de Vendas</h3>
 				</p:toolbarGroup>
+				<p:growl id="msgGlobal" />
 			</p:toolbar>
-			<h:form>
+			<h:form id="form">
+				
 				<br />
 				<div align="center">
 					<p:panelGrid columns="2" border="2">
@@ -28,20 +30,20 @@
 						<p:outputLabel value="Funcionario" />
 						<p:inputText value="#{vendaBean.funcionario.nome}" />
 					</p:panelGrid>
-					
-						<p:outputLabel value="Período" style="text-align:'center'" />
-						
+
+					<p:outputLabel value="Período" style="text-align:'center'" />
+
 					<p:panelGrid columns="4" border="2">
-						<p:outputLabel value="De:"/>
-						<p:calendar value="#{vendaBean.venda.datareport}"/>
-						<p:outputLabel value="A:"/>
-						<p:calendar value="#{vendaBean.venda.horario}"/>
+						<p:outputLabel value="De:" />
+						<p:calendar value="#{vendaBean.venda.datareport}" />
+						<p:outputLabel value="A:" />
+						<p:calendar value="#{vendaBean.venda.horario}" />
 					</p:panelGrid>
 				</div>
 				<br />
 				<div align="center">
 					<p:commandButton value="Gerar Relatório" icon="ui-icon-script"
-						actionListener="#{vendaBean.imprimir}" />
+						actionListener="#{vendaBean.imprimir}" update=":form :msgGlobal" />
 				</div>
 			</h:form>
 		</ui:define>

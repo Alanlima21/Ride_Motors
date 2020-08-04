@@ -24,8 +24,8 @@ FROM oficina.venda
 WHERE 
 	 oficina.funcionario.nome_func LIKE $P{FUNCIONARIO_NOME} 
 	 AND oficina.cliente.nome_clie LIKE $P{CLIENTE_NOME} 
-	 AND oficina.venda.data_vend >= $P{DATA_VENDA1} 
-	 AND oficina.venda.data_vend <= $P{DATA_VENDA}]]>
+	 AND (oficina.venda.data_vend >= $P{DATA_VENDA1}  or $P{DATA_VENDA1} IS NULL)
+	 AND (oficina.venda.data_vend <=$P{DATA_VENDA} or $P{DATA_VENDA} IS NULL)]]>
 	</queryString>
 	<field name="quantidade_vend" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="quantidade_vend"/>
