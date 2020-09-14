@@ -33,7 +33,7 @@
 							<p:commandButton value="Salvar" icon="ui-icon-disk"
 								action="#{produtoBean.salvar()}"
 								disabled="#{produtoBean.busca == true}"
-								update=":form :msgGlobal" />
+								update=":form :msgGlobal :form:table" />
 
 							<span class="ui-separator"> <span
 								class="ui-icon pi pi-ellipsis-v" />
@@ -118,7 +118,7 @@
 								hideEffect="fade">
 								<p:commandButton value="Sim" type="button"
 									styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-									outcome="produto.xhtml" />
+									update=":form:table" outcome="produto.xhtml" />
 								<p:commandButton value="Não" type="button"
 									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 							</p:confirmDialog>

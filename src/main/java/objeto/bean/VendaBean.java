@@ -1,6 +1,5 @@
 package objeto.bean;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -16,7 +15,8 @@ import java.util.stream.Collectors;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+
+import org.omnifaces.util.Faces;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -131,6 +131,7 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 			List<Produto> prod = produtoDao.buscar().stream().filter(p -> p.getQuantidade() > 0)
 					.collect(Collectors.toList());
 			prod.sort((p1, p2) -> p1.getNome().toUpperCase().compareTo(p2.getNome().toUpperCase()));
+			
 			return prod;
 		} catch (ErroSistema ex) {
 			throw new ErroSistema("Erro ao buscar produto!", ex);
@@ -258,8 +259,8 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 		Date data2 = venda.getHorario();
 
 		try {
-			File Jasper = new File(
-					FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/vendas.jasper"));
+			
+			String Jasper = Faces.getRealPath("/reports/vendas.jasper");
 
 			Map<String, Object> params = new HashMap<>();
 

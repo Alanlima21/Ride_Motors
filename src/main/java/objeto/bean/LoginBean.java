@@ -36,7 +36,7 @@ public class LoginBean {
                     null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Usuário ou senha incorretos!", 
                    null));
 			 
-			  return "index.xhtml?faces-redirect=true";
+			  return "index.xhtml";
 		}
 	}
 }

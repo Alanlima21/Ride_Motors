@@ -1,6 +1,5 @@
 package objeto.bean;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -15,6 +14,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import org.omnifaces.util.Faces;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -81,7 +82,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 			String nome = produto.getNome();
 			String fornecedor = produto.getFornecedor();
 
-			File Jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/produtos.jasper"));
+			String Jasper = Faces.getRealPath("/reports/produtos.jasper");
 
 			Map<String, Object> params = new HashMap<>();
 			
@@ -95,7 +96,8 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 			} else {
 				params.put("PRODUTO_FORNECEDOR", "%" + fornecedor + "%");
 			}
-
+			
+		
 			Connection conexao = Conexao.getConexao();
 
 			JasperReport report = (JasperReport) JRLoader.loadObject(new FileInputStream(Jasper));
