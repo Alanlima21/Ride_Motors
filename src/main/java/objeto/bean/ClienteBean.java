@@ -2,11 +2,13 @@ package objeto.bean;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
+import javax.faces.context.FacesContext;
 
 import objeto.dao.ClienteDao;
+import objeto.entidade.CadUsuario;
 import objeto.entidade.Cliente;
 
 @ManagedBean
@@ -32,7 +34,7 @@ public class ClienteBean extends CrudBean<Cliente, ClienteDao >{
 		}
 		return clienteDao;
 	}
-
+	
 	@Override
 	public Cliente criarNovaEntidade() {
 		return new Cliente();

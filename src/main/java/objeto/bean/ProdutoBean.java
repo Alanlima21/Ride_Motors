@@ -86,6 +86,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 
 			Map<String, Object> params = new HashMap<>();
 			
+			
 			if (nome == null) {
 				params.put("PRODUTO_NOME", "%%");
 			} else {
