@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-	<title>Index</title>
+	<title>Recuperar Senha</title>
 </h:head>
 
 <h:body style="background: #778899">
@@ -24,24 +24,23 @@
 
 		<h:panelGrid style="margin-left: 550px;" columns="1" >
 
-			<p:outputLabel  value="Login" style="color:black" />
-			<p:inputMask id="login" value="#{loginBean.login.login}"
+			<p:outputLabel  value="Cpf" style="color:black" />
+			<p:inputMask id="login" value="#{cadUsuarioBean.cadUsuario.cpf}"
 				mask="999.999.999-99" maxlength="50" size="26" placeholder="CPF"
 				  />
 
 			<p:outputLabel  value="Senha" style="color:black" />
-			<p:password id="senha" value="#{loginBean.login.senha}" size="26"
+			<p:password  value="#{cadUsuarioBean.cadUsuario.senha}" size="26"
 				/>
+				<p:outputLabel  value="confirmar senha" style="color:black" />
+			<p:password value="#{cadUsuarioBean.cadUsuario.confSenha}" size="26"/>
 		</h:panelGrid>
 		<br />
-		<p:commandButton id="botao" style="margin-left: 650px;" value="Entrar"
-			action="#{loginBean.logar}" update="@form:msgGlobal"/>
-		<br />
-		<p:commandLink value="Cadastre-se" style="margin-left: 650px;"
-			action="cadastro.xhtml" />
-			<br/>
-		<p:commandLink value=" Esqueci senha" style="margin-left: 650px;"
-			action="recuperacao.xhtml" />
+		<p:commandButton value="Salvar" style="margin-left: 650px;"
+			action="#{cadUsuarioBean.recuperaSenha}" update="@form:msgGlobal"/>
+			<br></br>
+			<br></br>
+		<p:button value="Voltar" outcome="index.xhtml" style="margin-left: 650px;"/>
 	</h:form>
 
 </h:body>

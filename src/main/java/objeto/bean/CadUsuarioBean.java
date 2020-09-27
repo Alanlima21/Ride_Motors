@@ -67,5 +67,34 @@ public class CadUsuarioBean {
 	public boolean testSobrenome(CadUsuario text) {
 		return text.getSobrenome().matches("[^\\d]+");
 	}
-
+	
+	public String recuperaSenha() {
+		CadUsuario cad = new CadUsuario();
+		
+		if(cadUsuarioDao.getCpf(cadUsuario.getCpf())) {
+			cad = cadUsuarioDao.getUsuaCpf(cadUsuario.getCpf());
+		}else {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cpf não encontrado!", null));
+			return "recuperacao.xhtml";
+		}
+		
+			cad.setId(cad.getId());
+			cad.setCpf(cad.getCpf());
+			cad.setNome(cad.getNome());
+			cad.setSobrenome(cad.getSobrenome());
+			cad.setSenha(cadUsuario.getSenha());
+		if (cadUsuario.getSenha().equals(cadUsuario.getConfSenha())) {
+			cadUsuarioDao.salvar(cad);
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Senha alterada com sucesso!", null));
+			return "index.xhtml";
+		}else {
+		
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Confirmação de senha inválida!", null));
+		return "recuperacao.xhtml";
+		}
+	
+	}
 }

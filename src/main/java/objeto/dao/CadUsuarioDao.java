@@ -23,7 +23,7 @@ public class CadUsuarioDao {
 			} else {
 				ps = conexao.prepareStatement(
 						"update usuario set nome_usua=?, sobrenome_usua=?, cpf_usua=?, senha_usua=? where id_usua=?");
-				ps.setInt(6, cadUsuario.getId());
+				ps.setInt(5, cadUsuario.getId());
 			}
 			
 			ps.setString(1, cadUsuario.getNome());
@@ -65,6 +65,36 @@ public class CadUsuarioDao {
 			Conexao.fecharConexao();
 		}
 		return check;
+
+	}
+	
+	public CadUsuario getUsuaCpf(String cpf) throws ErroSistema {
+		Connection conexao = Conexao.getConexao();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = conexao.prepareStatement("SELECT * FROM usuario WHERE cpf_usua = ? ");
+			ps.setString(1, cpf);
+
+			rs = ps.executeQuery();
+			CadUsuario cad = new CadUsuario();
+			while (rs.next()) {
+			cad.setId(rs.getInt("id_usua"));
+			cad.setNome(rs.getString("nome_usua"));
+			cad.setSobrenome(rs.getString("sobrenome_usua"));
+			cad.setCpf(rs.getString("cpf_usua"));
+			}
+			return cad;
+		} catch (Exception ex) {
+			throw new ErroSistema("Erro ao buscar Usuário!", ex);
+		} finally {
+			Conexao.fecharResultset(rs);
+			Conexao.fecharPreparedStatement(ps);
+			Conexao.fecharConexao();
+		}
+			
 
 	}
 }
