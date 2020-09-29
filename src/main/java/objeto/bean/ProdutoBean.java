@@ -35,17 +35,16 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 
 	private Produto produto = new Produto();
 	private List<Produto> listaProdutos;
-
 	private List<Produto> lista = new ArrayList<Produto>();
 
 	public List<Produto> getLista() {
 		 return lista;
 	}
-
+	
 	public void setLista(List<Produto> lista) {
 		this.lista = lista;
 	}
-
+	
 	@Override
 	public ProdutoDao getDao() {
 		if (produtoDao == null) {
@@ -62,7 +61,7 @@ public class ProdutoBean extends CrudBean<Produto, ProdutoDao> {
 	public List<Produto> getListaProdutos() {
 		return listaProdutos;
 	}
-
+	
 	public void setListaProdutos(List<Produto> listaProdutos) {
 		this.listaProdutos = listaProdutos;
 	}
