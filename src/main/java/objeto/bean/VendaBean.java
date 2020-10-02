@@ -132,13 +132,7 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 					.collect(Collectors.toList());
 			
 			prod.sort((p1, p2) -> p1.getNome().toUpperCase().compareTo(p2.getNome().toUpperCase()));
-			
-			for(Produto p : prod) {
-				if(p.getQuantidade() <= 10 && p.getQuantidade() !=0) {
-					 adicionarMensagem("O produto " + p.getNome() + " está quase acabando !", FacesMessage.SEVERITY_WARN);
-				}
-			}
-			
+		
 			return prod;
 		} catch (ErroSistema ex) {
 			throw new ErroSistema("Erro ao buscar produto!", ex);
@@ -245,6 +239,7 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 
 		vendaCadastro.setValor(0);
 		vendaCadastro.setquantidadePedido(0);
+		
 		// faz a baixa de estoque
 		for (int posicao = 0; posicao < listaItens.size(); posicao++) {
 			Item itemTemp = listaItens.get(posicao);
@@ -255,6 +250,14 @@ public class VendaBean extends CrudBean<Venda, VendaDao> {
 		}
 		
 		listaItens = new ArrayList<Item>();
+		
+		// Emite mensagem de aviso, quando o item estiver acabando
+		for(Produto p : getProdutos()) {
+			if(p.getQuantidade() <= 10) {
+				 adicionarMensagem("O produto " + p.getNome() + " está quase acabando !", FacesMessage.SEVERITY_WARN);
+			}
+		}
+		
 		adicionarMensagem("Venda realizada com sucesso!", FacesMessage.SEVERITY_INFO);
 	}
 
