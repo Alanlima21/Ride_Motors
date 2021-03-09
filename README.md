@@ -27,7 +27,7 @@ em falta por exemplo.
 - MySql
 
 # Como executar o projeto
-  - Pré-requisitos: Java 11
+  - Pré-requisitos: Java 8
   - Servidor Tomcat
   - MySql
   - xampp
